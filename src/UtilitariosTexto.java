@@ -1,6 +1,6 @@
 public class UtilitariosTexto {
 
-    public boolean saoIguais(char[] texto1, int tamanho1, char[] texto2, int tamanho2) {
+    public static boolean saoIguais(char[] texto1, int tamanho1, char[] texto2, int tamanho2) {
         if (tamanho1 != tamanho2) {
             return false;
         }
@@ -14,7 +14,7 @@ public class UtilitariosTexto {
         return true;
     }
 
-    public char[] copiarTexto(char[] origem, int tamanho) {
+    public static char[] copiarTexto(char[] origem, int tamanho) {
         char[] destino = new char[tamanho];
 
         for (int i = 0; i < tamanho; i++) {
@@ -24,7 +24,7 @@ public class UtilitariosTexto {
         return destino;
     }
 
-    public double converterParaDouble(char[] texto, int tamanho) {
+    public static double converterParaDouble(char[] texto, int tamanho) {
         if (tamanho == 0) {
             return -1.0;
         }
@@ -62,7 +62,7 @@ public class UtilitariosTexto {
         return resultado;
     }
 
-    public int compararOrdemAlfabetica(char[] texto1, int tamanho1, char[] texto2, int tamanho2) {
+    public static int compararOrdemAlfabetica(char[] texto1, int tamanho1, char[] texto2, int tamanho2) {
         int menorTamanho;
 
         if (tamanho1 < tamanho2) {
