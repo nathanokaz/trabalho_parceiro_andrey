@@ -29,5 +29,12 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+### Base de dados (grande demais para o GitHub) ###
+Books_rating.csv
+amostra.csv
+
+### IntelliJ (arquivo do modulo) ###
+*.iml
+
 /.idea
 Trabalho do Andrey.iml

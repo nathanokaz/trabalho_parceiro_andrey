@@ -1,0 +1,14 @@
+Id,Title,Price,User_id,profileName,review/helpfulness,review/score,review/time,review/summary,review/text
+B001,"Dune, Part 1",,A1X,"Maria ""M""",1/2,5.0,123,Otimo,"Livro bom, mesmo.
+Segunda linha do texto."
+B002,Emma,12.5,A2Y,,0/0,4.0,456,Legal,Gostei
+B003,Emma,,A3Z,Joao,1/1,2.0,789,Fraco,Nao gostei
+B004,"Dune, Part 1",,A2Y,,0/0,3.0,111,Ok,Mais ou menos
+B005,Hamlet,,,Anonimo,0/0,5.0,222,Sem usuario,Texto
+B006,,,A4W,Pedro,0/0,5.0,333,Sem titulo,Texto
+B007,Macbeth,,A5V,Ana,0/0,abc,444,Nota ruim,Texto
+B008,Macbeth,,A5V,Ana,0/0,6.0,555,Nota fora,Texto
+B009,Macbeth,,A5V,Ana,0/0,,666,Nota vazia,Texto
+B010,Emma,,A3Z,Joana,0/0,5.0,777,Otimo depois,Texto
+B011,Emma,,A6U,,0/0,1.0,888,Sem nome,Texto
+B012,"Dune, Part 1",,A6U,Carlos,0/0,2.0,999,Agora com nome,Texto
