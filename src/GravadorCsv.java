@@ -90,9 +90,7 @@ public class GravadorCsv {
     }
 
     public void escreverTextoFixo(String texto) throws IOException {
-        for (int i = 0; i < texto.length(); i++) {
-            escritor.write(texto.charAt(i));
-        }
+        escritor.write(texto);
     }
 
     public void fechar() throws IOException {

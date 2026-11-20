@@ -80,4 +80,35 @@ public class UtilitariosTexto {
         return tamanho1 - tamanho2;
     }
 
+    public static void imprimir(char[] texto, int tamanho) {
+        for (int i = 0; i < tamanho; i++) {
+            System.out.print(texto[i]);
+        }
+    }
+
+    public static void imprimirDecimal(double valor, int casas) {
+        int multiplicador = 1;
+        for (int i = 0; i < casas; i++) {
+            multiplicador = multiplicador * 10;
+        }
+
+        int parteInteira = (int) valor;
+        int parteFracionaria = (int) ((valor - parteInteira) * multiplicador + 0.5);
+
+        if (parteFracionaria >= multiplicador) {
+            parteInteira++;
+            parteFracionaria = parteFracionaria - multiplicador;
+        }
+
+        System.out.print(parteInteira);
+        if (casas > 0) {
+            System.out.print('.');
+            int divisor = multiplicador / 10;
+            while (divisor > 0) {
+                System.out.print((parteFracionaria / divisor) % 10);
+                divisor = divisor / 10;
+            }
+        }
+    }
+
 }
