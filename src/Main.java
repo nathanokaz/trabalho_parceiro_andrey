@@ -89,6 +89,9 @@ public class Main {
         System.out.println("Usuarios distintos: " + usuarios.quantidadeUsuarios());
         System.out.println();
 
+        ExperimentoHash.executar(livros, usuarios, capacidade);                     // Acréscimo referente ao tópico RF5 (5.3)
+        System.out.println();
+
         GravadorCsv gravador = new GravadorCsv("usuario_melhor_livro.csv");
         gravador.escreverTextoFixo("User_id,profileName,Title,media_livro,N_livro,nota_usuario");
         gravador.escreverFimDeLinha();
@@ -114,28 +117,27 @@ public class Main {
             gravador.escreverFimDeLinha();
 
             if (i < 10) {
-                imprimir(d.no.chave, d.no.tamanho);
+                UtilitariosTexto.imprimir(d.no.chave, d.no.tamanho);
                 System.out.print(" | ");
-                imprimir(d.nome, d.tamanhoNome);
+                UtilitariosTexto.imprimir(d.nome, d.tamanhoNome);
                 System.out.print(" | ");
-                imprimir(noLivro.chave, noLivro.tamanho);
+                UtilitariosTexto.imprimir(noLivro.chave, noLivro.tamanho);
                 System.out.println(" | media: " + media + " | N: " + n + " | nota_usuario: " + d.notaUsuario);
             }
         }
 
         gravador.fechar();
+        System.out.println();
+        ConsultaUsuarios.executar("user_id.txt", usuarios, livros);     // Acréscimo referente ao tópico RF6
+
+        System.out.println();
+        RankingLivros.executar(livros);                                               // Acréscimo referente ao tópico RF7
     }
 
     static void pularCabecalho(LeitorCsv leitor) throws IOException {
         leitor.lerCampo(null, 0);
         while (!leitor.terminouLinha()) {
             leitor.lerCampo(null, 0);
-        }
-    }
-
-    static void imprimir(char[] texto, int tamanho) {
-        for (int i = 0; i < tamanho; i++) {
-            System.out.print(texto[i]);
         }
     }
 }
