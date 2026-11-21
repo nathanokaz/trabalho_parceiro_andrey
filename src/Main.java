@@ -19,6 +19,8 @@ public class Main {
         int descartadasSemTitulo = 0;
         int descartadasNotaInvalida = 0;
 
+        long inicioLeituraLivros = System.nanoTime();
+
         LeitorCsv leitor = new LeitorCsv(caminho);
         pularCabecalho(leitor);
 
@@ -52,6 +54,11 @@ public class Main {
 
         leitor.fechar();
 
+        long finalLeituraLivros = System.nanoTime();
+        long tempoLeituraLivros = (finalLeituraLivros - inicioLeituraLivros) / 1000000;
+
+        long inicioLeituramelhorLivro = System.nanoTime();
+
         leitor = new LeitorCsv(caminho);
         pularCabecalho(leitor);
 
@@ -80,6 +87,9 @@ public class Main {
 
         leitor.fechar();
 
+        long fimLeituraMelhorLivro = System.nanoTime();
+        long tempoLeituraMelhorLivro = (fimLeituraMelhorLivro - inicioLeituramelhorLivro) / 1000000;
+
         System.out.println("Linhas lidas: " + linhasLidas);
         System.out.println("Linhas validas: " + linhasValidas);
         System.out.println("Descartadas sem User_id: " + descartadasSemUsuario);
@@ -91,6 +101,8 @@ public class Main {
 
         ExperimentoHash.executar(livros, usuarios, capacidade);                     // Acréscimo referente ao tópico RF5 (5.3)
         System.out.println();
+
+        long inicioGravacaoDados = System.nanoTime();
 
         GravadorCsv gravador = new GravadorCsv("usuario_melhor_livro.csv");
         gravador.escreverTextoFixo("User_id,profileName,Title,media_livro,N_livro,nota_usuario");
@@ -127,11 +139,34 @@ public class Main {
         }
 
         gravador.fechar();
-        System.out.println();
-        ConsultaUsuarios.executar("user_id.txt", usuarios, livros);     // Acréscimo referente ao tópico RF6
+
+        long fimGravacaodados = System.nanoTime();
+        long tempoGravacaoDados = (fimGravacaodados - inicioGravacaoDados) / 1000000;
 
         System.out.println();
+
+        long inicioConsultas = System.nanoTime();
+
+        ConsultaUsuarios.executar("user_id.txt", usuarios, livros);     // Acréscimo referente ao tópico RF6
+
+        long fimConsultas = System.nanoTime();
+        long tempoConsultas = (fimConsultas - inicioConsultas) / 1000000;
+
+
+        System.out.println();
+
+        long inicioRankingLivros = System.nanoTime();
         RankingLivros.executar(livros);                                               // Acréscimo referente ao tópico RF7
+
+        long fimRankingLivros = System.nanoTime();
+        long tempoRankingLivros = (fimRankingLivros - inicioRankingLivros) / 1000000;
+
+        System.out.println();
+        System.out.println("tempo de execução da leitura dos livros:  " + tempoLeituraLivros);
+        System.out.println("tempo execução da leitura melhor livro: " + tempoLeituraMelhorLivro);
+        System.out.println("tempo de execução da gravação dos dados: " + tempoGravacaoDados);
+        System.out.println("tempo das consultas: " + tempoConsultas);
+        System.out.println("tempo rankeamento dos livros: " + tempoRankingLivros);
     }
 
     static void pularCabecalho(LeitorCsv leitor) throws IOException {
