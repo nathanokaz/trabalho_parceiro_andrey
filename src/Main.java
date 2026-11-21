@@ -99,7 +99,8 @@ public class Main {
         System.out.println("Usuarios distintos: " + usuarios.quantidadeUsuarios());
         System.out.println();
 
-        ExperimentoHash.executar(livros, usuarios, capacidade);                     // Acréscimo referente ao tópico RF5 (5.3)
+        // Acréscimo referente ao tópico RF5 (5.3)
+        ExperimentoHash.executar(livros, usuarios, capacidade);
         System.out.println();
 
         long inicioGravacaoDados = System.nanoTime();
@@ -147,7 +148,8 @@ public class Main {
 
         long inicioConsultas = System.nanoTime();
 
-        ConsultaUsuarios.executar("user_id.txt", usuarios, livros);     // Acréscimo referente ao tópico RF6
+        // Acréscimo referente ao tópico RF6
+        ConsultaUsuarios.executar("user_id.txt", usuarios, livros);
 
         long fimConsultas = System.nanoTime();
         long tempoConsultas = (fimConsultas - inicioConsultas) / 1000000;
@@ -156,10 +158,19 @@ public class Main {
         System.out.println();
 
         long inicioRankingLivros = System.nanoTime();
-        RankingLivros.executar(livros);                                               // Acréscimo referente ao tópico RF7
+        // Acréscimo referente ao tópico RF7
+        RankingLivros.executar(livros);
 
         long fimRankingLivros = System.nanoTime();
         long tempoRankingLivros = (fimRankingLivros - inicioRankingLivros) / 1000000;
+
+        long inicioOrdUsuarios = System.nanoTime();
+
+        OrdenadorUsuarios ordenadorUsuarios = new OrdenadorUsuarios();
+        ordenadorUsuarios.ordenar(usuarios,livros);
+
+        long fimOrdenaçãoUsuarios = System.nanoTime();
+        long tempoOrdenacaoUsuarios = (fimOrdenaçãoUsuarios - inicioOrdUsuarios) / 1000000;
 
         System.out.println();
         System.out.println("tempo de execução da leitura dos livros:  " + tempoLeituraLivros);
@@ -167,10 +178,12 @@ public class Main {
         System.out.println("tempo de execução da gravação dos dados: " + tempoGravacaoDados);
         System.out.println("tempo das consultas: " + tempoConsultas);
         System.out.println("tempo rankeamento dos livros: " + tempoRankingLivros);
+        System.out.println("tempo de ordenção dos usuários para gerar arquivo: " + tempoOrdenacaoUsuarios);
     }
 
     static void pularCabecalho(LeitorCsv leitor) throws IOException {
         leitor.lerCampo(null, 0);
+
         while (!leitor.terminouLinha()) {
             leitor.lerCampo(null, 0);
         }

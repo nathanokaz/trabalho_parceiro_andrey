@@ -30,6 +30,7 @@ public class GravadorCsv {
                 escritor.write(texto[i]);
             }
             escritor.write('"');
+
         } else {
             for (int i = 0; i < tamanho; i++) {
                 escritor.write(texto[i]);
