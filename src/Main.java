@@ -2,7 +2,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String caminho = "teste.csv";
+        String caminho = "Books_rating.csv";
         int capacidade = 1000003;
 
         TabelaLivros livros = new TabelaLivros(capacidade, TabelaHash.FNV1A);
