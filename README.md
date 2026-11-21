@@ -6,6 +6,7 @@ Projeto de processamento e indexação de uma base com cerca de 3 milhões de av
   - João Pedro Macena Correa (`@Macenajp`)
   - Nathan Bueno C. Okazaki (`@nathanokaz`)
 
+<br>
 
 - **Vídeo de apresentação:** 
 - **Link do repositório:** https://github.com/nathanokaz/trabalho_parceiro_andrey
@@ -21,7 +22,7 @@ Este trabalho implementa uma Tabela Hash própria com capacidade fixa (`1.000.00
 - Leitura e filtragem de avaliações válidas, contabilizando registros descartados;
 - Comparação experimental entre as 3 funções hash (colisões, sondagens com sucesso/falha, pior caso e tempos);
 - Consulta pontual de usuários a partir do arquivo `user_id.txt`;
-- Ranking dos Top 10 livros com maior média e $N \ge 100$ avaliações;
+- Ranking dos Top 10 livros com maior média e N $\ge$ 100 avaliações;
 - Exportação dos resultados em CSV (normal e ordenado por algoritmo próprio) com medição de tempo de cada etapa.
 
 **Restrições:**
