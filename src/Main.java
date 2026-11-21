@@ -5,11 +5,6 @@ public class Main {
         String caminho = "teste.csv";
         int capacidade = 1000003;
 
-        char[] titulo = new char[2000];
-        char[] usuario = new char[200];
-        char[] nome = new char[500];
-        char[] nota = new char[20];
-
         TabelaLivros livros = new TabelaLivros(capacidade, TabelaHash.FNV1A);
         TabelaUsuarios usuarios = new TabelaUsuarios(capacidade, TabelaHash.FNV1A);
 
@@ -25,29 +20,18 @@ public class Main {
         pularCabecalho(leitor);
 
         while (leitor.temMaisDados()) {
-            leitor.lerCampo(null, 0);
-            int tamanhoTitulo = leitor.lerCampo(titulo, 2000);
-            leitor.lerCampo(null, 0);
-            int tamanhoUsuario = leitor.lerCampo(usuario, 200);
-            leitor.lerCampo(null, 0);
-            leitor.lerCampo(null, 0);
-            int tamanhoNota = leitor.lerCampo(nota, 20);
-            leitor.lerCampo(null, 0);
-            leitor.lerCampo(null, 0);
-            leitor.lerCampo(null, 0);
+            leitor.lerAvaliacao();
 
             linhasLidas++;
 
-            double notaConvertida = UtilitariosTexto.converterParaDouble(nota, tamanhoNota);
-
-            if (tamanhoUsuario == 0) {
+            if (leitor.tamanhoUsuario == 0) {
                 descartadasSemUsuario++;
-            } else if (tamanhoTitulo == 0) {
+            } else if (leitor.tamanhoTitulo == 0) {
                 descartadasSemTitulo++;
-            } else if (notaConvertida < 1.0 || notaConvertida > 5.0) {
+            } else if (leitor.nota < 1.0 || leitor.nota > 5.0) {
                 descartadasNotaInvalida++;
             } else {
-                livros.registrar(titulo, tamanhoTitulo, notaConvertida);
+                livros.registrar(leitor.titulo, leitor.tamanhoTitulo, leitor.nota);
                 linhasValidas++;
             }
         }
@@ -63,25 +47,11 @@ public class Main {
         pularCabecalho(leitor);
 
         while (leitor.temMaisDados()) {
-            leitor.lerCampo(null, 0);
-            int tamanhoTitulo = leitor.lerCampo(titulo, 2000);
-            leitor.lerCampo(null, 0);
-            int tamanhoUsuario = leitor.lerCampo(usuario, 200);
-            int tamanhoNome = leitor.lerCampo(nome, 500);
-            leitor.lerCampo(null, 0);
-            int tamanhoNota = leitor.lerCampo(nota, 20);
-            leitor.lerCampo(null, 0);
-            leitor.lerCampo(null, 0);
-            leitor.lerCampo(null, 0);
+            leitor.lerAvaliacao();
 
-            double notaConvertida = UtilitariosTexto.converterParaDouble(nota, tamanhoNota);
-
-            boolean valida = tamanhoUsuario > 0 && tamanhoTitulo > 0
-                    && notaConvertida >= 1.0 && notaConvertida <= 5.0;
-
-            if (valida) {
-                int livro = livros.buscarIndice(titulo, tamanhoTitulo);
-                usuarios.registrar(usuario, tamanhoUsuario, nome, tamanhoNome, livro, notaConvertida, livros);
+            if (leitor.tamanhoUsuario > 0 && leitor.tamanhoTitulo > 0 && leitor.nota >= 1.0 && leitor.nota <= 5.0) {
+                int livro = livros.buscarIndice(leitor.titulo, leitor.tamanhoTitulo);
+                usuarios.registrar(leitor.usuario, leitor.tamanhoUsuario, leitor.nome, leitor.tamanhoNome, livro, leitor.nota, livros);
             }
         }
 
@@ -106,30 +76,18 @@ public class Main {
         long inicioGravacaoDados = System.nanoTime();
 
         GravadorCsv gravador = new GravadorCsv("usuario_melhor_livro.csv");
-        gravador.escreverTextoFixo("User_id,profileName,Title,media_livro,N_livro,nota_usuario");
-        gravador.escreverFimDeLinha();
+        gravador.escreverCabecalhoUsuarios();
 
         for (int i = 0; i < usuarios.quantidadeUsuarios(); i++) {
             DadosUsuario d = usuarios.dados(i);
-            int livro = d.melhorLivro;
-            No noLivro = livros.livro(livro);
-            int n = livros.contagem(livro);
-            double media = livros.soma(livro) / n;
-
-            gravador.escreverCampo(d.no.chave, d.no.tamanho);
-            gravador.escreverVirgula();
-            gravador.escreverCampo(d.nome, d.tamanhoNome);
-            gravador.escreverVirgula();
-            gravador.escreverCampo(noLivro.chave, noLivro.tamanho);
-            gravador.escreverVirgula();
-            gravador.escreverDecimal(media, 4);
-            gravador.escreverVirgula();
-            gravador.escreverInteiro(n);
-            gravador.escreverVirgula();
-            gravador.escreverDecimal(d.notaUsuario, 1);
-            gravador.escreverFimDeLinha();
+            gravador.escreverLinhaUsuario(d, livros);
 
             if (i < 10) {
+                int livro = d.melhorLivro;
+                No noLivro = livros.livro(livro);
+                int n = livros.contagem(livro);
+                double media = livros.soma(livro) / n;
+
                 UtilitariosTexto.imprimir(d.no.chave, d.no.tamanho);
                 System.out.print(" | ");
                 UtilitariosTexto.imprimir(d.nome, d.tamanhoNome);
@@ -173,6 +131,8 @@ public class Main {
         long tempoOrdenacaoUsuarios = (fimOrdenaçãoUsuarios - inicioOrdUsuarios) / 1000000;
 
         System.out.println();
+
+        System.out.println("--------------------- tempos de execução ---------------------");
         System.out.println("tempo de execução da leitura dos livros:  " + tempoLeituraLivros);
         System.out.println("tempo execução da leitura melhor livro: " + tempoLeituraMelhorLivro);
         System.out.println("tempo de execução da gravação dos dados: " + tempoGravacaoDados);

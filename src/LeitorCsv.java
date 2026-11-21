@@ -8,6 +8,15 @@ public class LeitorCsv {
     private int caractereEspiado;
     private boolean fimDeLinha;
 
+    public char[] titulo = new char[2000];
+    public char[] usuario = new char[200];
+    public char[] nome = new char[500];
+    public int tamanhoTitulo;
+    public int tamanhoUsuario;
+    public int tamanhoNome;
+    public double nota;
+    private char[] textoNota = new char[20];
+
     public LeitorCsv(String caminho) throws IOException {
         this.leitor = new BufferedReader(new FileReader(caminho), 1 << 16);
         this.caractereEspiado = -2;
@@ -38,6 +47,22 @@ public class LeitorCsv {
 
     public boolean terminouLinha() {
         return fimDeLinha;
+    }
+
+    // Lê uma linha do Books_rating.csv e preenche titulo, usuario, nome e nota
+    public void lerAvaliacao() throws IOException {
+        lerCampo(null, 0);
+        tamanhoTitulo = lerCampo(titulo, 2000);
+        lerCampo(null, 0);
+        tamanhoUsuario = lerCampo(usuario, 200);
+        tamanhoNome = lerCampo(nome, 500);
+        lerCampo(null, 0);
+        int tamanhoNota = lerCampo(textoNota, 20);
+        lerCampo(null, 0);
+        lerCampo(null, 0);
+        lerCampo(null, 0);
+
+        nota = UtilitariosTexto.converterParaDouble(textoNota, tamanhoNota);
     }
 
 

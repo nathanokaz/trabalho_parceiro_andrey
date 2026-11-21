@@ -82,19 +82,34 @@ public class GravadorCsv {
         }
     }
 
-    public void escreverVirgula() throws IOException {
-        escritor.write(',');
-    }
-
-    public void escreverFimDeLinha() throws IOException {
+    public void escreverCabecalhoUsuarios() throws IOException {
+        escritor.write("User_id,profileName,Title,media_livro,N_livro,nota_usuario");
         escritor.write('\n');
     }
 
-    public void escreverTextoFixo(String texto) throws IOException {
-        escritor.write(texto);
+    public void escreverLinhaUsuario(DadosUsuario d, TabelaLivros livros) throws IOException {
+        int livro = d.melhorLivro;
+        No noLivro = livros.livro(livro);
+        int n = livros.contagem(livro);
+        double media = livros.soma(livro) / n;
+
+        escreverCampo(d.no.chave, d.no.tamanho);
+        escritor.write(',');
+        escreverCampo(d.nome, d.tamanhoNome);
+        escritor.write(',');
+        escreverCampo(noLivro.chave, noLivro.tamanho);
+        escritor.write(',');
+        escreverDecimal(media, 4);
+        escritor.write(',');
+        escreverInteiro(n);
+        escritor.write(',');
+        escreverDecimal(d.notaUsuario, 1);
+        escritor.write('\n');
     }
 
     public void fechar() throws IOException {
         escritor.close();
+
+
     }
 }

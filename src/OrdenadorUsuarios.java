@@ -17,28 +17,10 @@ public class OrdenadorUsuarios {
         }
 
         GravadorCsv gravador = new GravadorCsv("usuario_melhor_livro_ordenado.csv");
-        gravador.escreverTextoFixo("User_id,profileName,Title,media_livro,N_livro,nota_usuario");
-        gravador.escreverFimDeLinha();
+        gravador.escreverCabecalhoUsuarios();
 
         for (int i = 0; i < totalUsuarios; i++) {
-            DadosUsuario dadosUsuario = usuarios.dados(indices[i]);
-            int livro = dadosUsuario.melhorLivro;
-            No noLivro = livros.livro(livro);
-            int quantidadeAvaliacoes = livros.contagem(livro);
-            double media = livros.soma(livro) / quantidadeAvaliacoes;
-
-            gravador.escreverCampo(dadosUsuario.no.chave, dadosUsuario.no.tamanho);
-            gravador.escreverVirgula();
-            gravador.escreverCampo(dadosUsuario.nome, dadosUsuario.tamanhoNome);
-            gravador.escreverVirgula();
-            gravador.escreverCampo(noLivro.chave, noLivro.tamanho);
-            gravador.escreverVirgula();
-            gravador.escreverDecimal(media, 4);
-            gravador.escreverVirgula();
-            gravador.escreverInteiro(quantidadeAvaliacoes);
-            gravador.escreverVirgula();
-            gravador.escreverDecimal(dadosUsuario.notaUsuario, 1);
-            gravador.escreverFimDeLinha();
+            gravador.escreverLinhaUsuario(usuarios.dados(indices[i]), livros);
         }
         gravador.fechar();
     }
@@ -105,26 +87,6 @@ public class OrdenadorUsuarios {
             return false;
         }
 
-        return compararTexto(usuarioA.no.chave, usuarioA.no.tamanho, usuarioB.no.chave, usuarioB.no.tamanho) <= 0;
-    }
-
-    private int compararTexto(char[] textoA, int tamanhoA, char[] textoB, int tamanhoB) {
-        int menor;
-
-        if (tamanhoA < tamanhoB) {
-            menor = tamanhoA;
-        } else {
-            menor = tamanhoB;
-        }
-
-        for (int i = 0; i < menor; i++) {
-            if (textoA[i] != textoB[i]) {
-                return textoA[i] - textoB[i];
-
-            }
-        }
-
-
-        return tamanhoA - tamanhoB;
+        return UtilitariosTexto.compararOrdemAlfabetica(usuarioA.no.chave, usuarioA.no.tamanho, usuarioB.no.chave, usuarioB.no.tamanho) <= 0;
     }
 }
