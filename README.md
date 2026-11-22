@@ -10,6 +10,7 @@ Projeto de processamento e indexação de uma base com cerca de 3 milhões de av
 
 - **Vídeo de apresentação:** https://youtu.be/rAvAJT5a17Y
 - **Link do repositório:** https://github.com/nathanokaz/trabalho_parceiro_andrey
+- **Link dos arquivos gerados na saída (já zipados): https://github.com/nathanokaz/trabalho_parceiro_andrey/releases/tag/Resultados
 - **Link da base de dados**: https://www.kaggle.com/datasets/mohamedbakhet/amazon-books-reviews
 
 <br>
